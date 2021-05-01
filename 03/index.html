@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FPA 2021</title>
+  </head>
+  <body>
+    <h3>The Fantastic Peoples Awards™️ 2021 nominees:</h3>
+    <div id="listContainer" />
+  </body>
+</html>
+
+<script>
+  async function getNominees() {
+    return [
+      "Alex",
+      "Alice",
+      "Ben",
+      "Dana",
+      "Eddie",
+      "Eóin",
+      "Josué",
+      "Katerina",
+      "Kay",
+      "Leo",
+      "Ryan",
+      "Simo",
+    ];
+  }
+
+  class Nominee {
+    constructor(name) {
+      this.name = name;
+      this.votes = 0;
+    }
+
+    addVote() {
+      const listTags = document.getElementsByTagName("p");
+      const searchText = `${this.name}: ${this.votes}`;
+      let found;
+
+      for (let i = 0; i < listTags.length; i++) {
+        if (listTags[i].textContent == searchText) {
+          found = listTags[i];
+          break;
+        }
+      }
+
+      this.votes++;
+
+      found.innerText = `${this.name}: ${this.votes}`;
+    }
+
+    toHTML() {
+      const listElement = document.createElement("li");
+      const voteElement = document.createElement("button");
+      const nameElement = document.createElement("p");
+      const nameContent = document.createTextNode(
+        `${this.name}: ${this.votes}`
+      );
+      const voteContent = document.createTextNode("Vote");
+
+      voteElement.appendChild(voteContent);
+      nameElement.appendChild(nameContent);
+      listElement.appendChild(nameElement);
+      listElement.appendChild(voteElement);
+
+      voteElement.addEventListener("click", () => {
+        this.addVote();
+      });
+
+      return listElement;
+    }
+  }
+
+  class NomineeList {
+    constructor(nominees) {
+      this.list = nominees.map((name) => new Nominee(name));
+    }
+
+    toHTML() {
+      const listContainer = document.createElement("ul");
+      const listElements = this.list.map((nominee) => nominee.toHTML());
+
+      listElements.forEach((listElement) =>
+        listContainer.appendChild(listElement)
+      );
+
+      return listContainer;
+    }
+  }
+
+  async function onPageLoad() {
+    const nominees = await getNominees();
+    const nomineeList = new NomineeList(nominees);
+
+    document.getElementById("listContainer").appendChild(nomineeList.toHTML());
+  }
+
+  window.addEventListener("DOMContentLoaded", onPageLoad);
+</script>
