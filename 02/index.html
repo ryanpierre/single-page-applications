@@ -6,65 +6,66 @@
   <body>
     <h3>The Fantastic Peoples Awards™️ 2021 nominees:</h3>
     <div id="listContainer" />
+    <script>
+      async function getNominees() {
+        return [
+          "Alex",
+          "Alice",
+          "Ben",
+          "Dana",
+          "Eddie",
+          "Eóin",
+          "Josué",
+          "Katerina",
+          "Kay",
+          "Leo",
+          "Ryan",
+          "Simo",
+        ];
+      }
+
+      class Nominee {
+        constructor(name) {
+          this.name = name;
+        }
+
+        toHTML() {
+          const listElement = document.createElement("li");
+          const content = document.createTextNode(`${this.name}`);
+
+          listElement.appendChild(content);
+
+          return listElement;
+        }
+      }
+
+      class NomineeList {
+        constructor(nominees) {
+          this.list = nominees;
+        }
+
+        toHTML() {
+          const listContainer = document.createElement("ul");
+          const listElements = this.list.map((nominee) => nominee.toHTML());
+
+          listElements.forEach((listElement) =>
+            listContainer.appendChild(listElement)
+          );
+
+          return listContainer;
+        }
+      }
+
+      async function onPageLoad() {
+        const nominees = await getNominees().map((name) => new Nominee(name));
+        const nomineeList = new NomineeList(nominees);
+
+        document
+          .getElementById("listContainer")
+          .appendChild(nomineeList.toHTML());
+      }
+
+      window.addEventListener("DOMContentLoaded", onPageLoad);
+    </script>
   </body>
 </html>
-
-<script>
-  async function getNominees() {
-    return [
-      "Alex",
-      "Alice",
-      "Ben",
-      "Dana",
-      "Eddie",
-      "Eóin",
-      "Josué",
-      "Katerina",
-      "Kay",
-      "Leo",
-      "Ryan",
-      "Simo",
-    ];
-  }
-
-  class Nominee {
-    constructor(name) {
-      this.name = name;
-    }
-
-    toHTML() {
-      const listElement = document.createElement("li");
-      const content = document.createTextNode(`${this.name}`);
-
-      listElement.appendChild(content);
-
-      return listElement;
-    }
-  }
-
-  class NomineeList {
-    constructor(nominees) {
-      this.list = nominees.map((name) => new Nominee(name));
-    }
-
-    toHTML() {
-      const listContainer = document.createElement("ul");
-      const listElements = this.list.map((nominee) => nominee.toHTML());
-
-      listElements.forEach((listElement) =>
-        listContainer.appendChild(listElement)
-      );
-
-      return listContainer;
-    }
-  }
-
-  async function onPageLoad() {
-    const nominees = await getNominees();
-    const nomineeList = new NomineeList(nominees);
-
-    document.getElementById("listContainer").appendChild(nomineeList.toHTML());
-  }
-
-  window.addEventListener("DOMContentLoaded", onPageLoad);
-</script>
