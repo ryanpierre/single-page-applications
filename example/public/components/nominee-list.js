@@ -1,6 +1,6 @@
 class NomineeList {
   constructor(nominees) {
-    this.list = nominees.map((name) => new Nominee(name));
+    this.list = nominees;
   }
 
   toHTML() {
