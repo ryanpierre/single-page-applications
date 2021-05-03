@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "hbs");
 
-const nomineesDB = [
+let nomineesDB = [
   { id: 0, name: "Alex", votes: 0 },
   { id: 1, name: "Alice", votes: 0 },
   { id: 2, name: "Ben", votes: 0 },
@@ -33,12 +33,16 @@ app.get("/nominees", (req, res) => {
 });
 
 app.post("/nominees/:id", (req, res) => {
-  const newDB = nomineesDB.map((nominee) => {
+  nomineesDB = nomineesDB.map((nominee) => {
     if (nominee.id !== parseInt(req.params.id)) {
       return nominee;
     }
 
     return { ...nominee, votes: nominee.votes + 1 };
+  });
+
+  res.json({
+    nominees: nomineesDB,
   });
 });
 
