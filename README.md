@@ -4,18 +4,21 @@
 
 In this excercise, we'll be building the voting website for the fantastic people's awards 2021. We want to build an app that can retrieve all of the nominees from our API, and give a user the ability to vote on who their favourite person is.
 
+The server is already finished, so we just need to work on the front end HTML. To do this, we will be building a **single page application**
+
 ## Learning Objectives 
 
 - I can explain what a single page application is
 - I can explain how the request, response and update cycle works with Javascript and HTML
-- I can build a single page application
+- I can build a single page application using components
 
 ## Overview
 
 This repo contains two directories: `app` and `example`
 
 The example directory is a fully implemented version of the single page app we're building today.
-The app directory is the bare bones node server we'll be starting from to build the single page application.
+
+The app directory is just the node server we'll be starting from to build the single page application with no front end yet.
 
 ## How to Run
 
