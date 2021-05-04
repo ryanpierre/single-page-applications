@@ -2,18 +2,20 @@ class Nominee {
   constructor(nominee) {
     this.id = nominee.id;
     this.name = nominee.name;
-    this.votes = 0;
-  }
-
-  updateText() {
-    const voteTextElement = document.getElementById(`nominee-${this.id}`);
-    voteTextElement.innerText = `${this.name}: ${this.votes}`;
+    this.votes = nominee.votes;
   }
 
   addVote() {
-    this.votes++;
-
-    this.updateText();
+    return new Promise((done) => {
+      fetch(`http://localhost:3000/nominees/${this.id}`, {
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.votes = data.nominee.votes;
+          done();
+        });
+    });
   }
 
   toHTML() {
@@ -23,7 +25,7 @@ class Nominee {
     const nameContent = `${this.name}: ${this.votes}`;
     const voteContent = "Vote";
 
-    nameElement.setAttribute("id", `nominee-${this.id}`);
+    listElement.setAttribute("id", `nominee-${this.id}`);
 
     voteElement.innerText = voteContent;
     nameElement.innerText = nameContent;
@@ -31,7 +33,9 @@ class Nominee {
     listElement.appendChild(voteElement);
 
     voteElement.addEventListener("click", () => {
-      this.addVote();
+      this.addVote().then(() => {
+        listElement.replaceWith(this.toHTML());
+      });
     });
 
     return listElement;

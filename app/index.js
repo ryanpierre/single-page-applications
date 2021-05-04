@@ -33,16 +33,20 @@ app.get("/nominees", (req, res) => {
 });
 
 app.post("/nominees/:id", (req, res) => {
+  let updatedNominee;
+
   nomineesDB = nomineesDB.map((nominee) => {
     if (nominee.id !== parseInt(req.params.id)) {
       return nominee;
     }
 
-    return { ...nominee, votes: nominee.votes + 1 };
+    updatedNominee = { ...nominee, votes: nominee.votes + 1 };
+
+    return updatedNominee;
   });
 
   res.json({
-    nominees: nomineesDB,
+    nominee: updatedNominee,
   });
 });
 

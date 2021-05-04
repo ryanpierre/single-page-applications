@@ -1,10 +1,11 @@
-function onPageLoad() {
-  console.log("Page Loaded");
+async function onPageLoad() {
+  console.log('Page Loaded');
 
   // Request the list of nominees
-  fetch("http://localhost:3000/nominees", { method: "GET" })
-    .then((response) => response.json())
-    .then((data) => console.log(data.nominees));
+  const response = await fetch('http://localhost:3000/nominees', { method: 'GET' });
+  const responseJSON = await response.json();
+
+  console.log(responseJSON.nominees);
 }
 
-window.addEventListener("DOMContentLoaded", onPageLoad);
+window.addEventListener('DOMContentLoaded', onPageLoad);
