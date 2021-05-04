@@ -10,7 +10,8 @@ The server is already finished, so we just need to work on the front end HTML. T
 
 - I can explain what a single page application is
 - I can explain how the request, response and update cycle works with Javascript and HTML
-- I can build a single page application using components
+- I can build a single page application
+- I can build re-usable UI components
 
 ## Overview
 
